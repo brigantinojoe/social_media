@@ -1,4 +1,5 @@
 const { User, Thought } = require('../models');
+const { ObjectId } = require('mongoose').Types;
 
 module.exports = {
   // Get all users
@@ -49,6 +50,17 @@ module.exports = {
           }
         }
       }
-    )
+    ).then(() => res.json({ message: 'Friend added!' }))
+      .catch((err) => res.status(500).json(err));
+  },
+  removeFriend(req, res) {
+    User.findOneAndUpdate({ _id: ObjectId(req.params.userId) },
+      {
+        $pull: {
+          friends: ObjectId(req.params.friendId)
+        }
+      }
+    ).then(() => res.json({ message: `Friend removed!`, }))
+      .catch((err) => res.status(500).json(err));
   }
 };
