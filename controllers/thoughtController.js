@@ -29,7 +29,7 @@ module.exports = {
                         }
                     }
                 )
-                    .then((user) => res.json(thought))
+                    .then((thought) => res.json(thought))
                     .catch((err) => res.status(500).json(err));
             })
             .catch((err) => res.status(500).json(err));
@@ -48,4 +48,30 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-};
+    addReaction(req, res) {
+        Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+            {
+                $push: {
+                    reactions: {
+                        reactionBody: req.body.reactionBody,
+                        username: req.body.username,
+                    }
+                }
+            }
+        )
+            .then((reaction) => res.json(reaction))
+            .catch((err) => res.status(500).json(err));
+    },
+    removeReaction(req, res) {
+        Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+            {
+                $pull: {
+                    reactions: {
+                        reactionId: ObjectId(req.body.reactionId)
+                    }
+                }
+            }
+        ).then(() => res.json({ message: `Reaction removed!`, }))
+            .catch((err) => res.status(500).json(err));
+    },
+}
