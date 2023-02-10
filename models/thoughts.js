@@ -38,6 +38,6 @@ thoughtSchema
     this.set({ v });
   });
 
-const User = model('thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
-module.exports = User;
+module.exports = Thought;
