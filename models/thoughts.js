@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require("./reactions");
 
-// Schema to create User model
+// Schema to create Thought model
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -16,7 +16,7 @@ const thoughtSchema = new Schema(
             default: () => new Date(+new Date() + 0 * 24 * 60 * 60 * 1000),
             get: (createdAtVal) => moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
         },
-        userame: {
+        username: {
             type: String,
             required: true,
         },
